@@ -5,6 +5,7 @@ let predictions = [];
 let lastHandPos = null;
 let waves = [];
 let fish = [];
+let fishGrumbleSynth;
 
 function preload() {
   handPose = ml5.handPose({ flipped: true });
@@ -21,6 +22,29 @@ function setup() {
   // video.hide();
 
   handPose.detectStart(video, results => predictions = results);
+
+  // Global layered synth for all fish
+  fishGrumbleSynth = new Tone.PolySynth(Tone.Synth, {
+    maxPolyphony: 12,
+    oscillator: { type: "triangle" },
+    envelope: { attack: 0.02, decay: 0.09, sustain: 0.18, release: 0.18 }
+  }).toDestination();
+
+  // Make it cute and "alien" by running through a filter and some vibrato
+  const fishFilter = new Tone.Filter(1100, "highpass").toDestination();
+  fishGrumbleSynth.connect(fishFilter);
+
+  // Optional vibrato effect
+  const vibrato = new Tone.Vibrato(4.7, 0.19).toDestination();
+  fishFilter.connect(vibrato);
+
+  // Unlock Tone.js context on user gesture (for Fish grumble)
+  // getAudioContext().suspend();
+  // userStartAudio();
+  // window.addEventListener('pointerdown', () => {
+  //   Tone.start();
+  //   getAudioContext().resume();
+  // }, { once: true });
 
   // Fish objects
   for (let i = 0; i < 8; i++) {

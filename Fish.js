@@ -10,8 +10,17 @@ class Fish {
     this.wigglePower = 1;
     this.tailPhase = random(TWO_PI);
 
+    // For blowing bubbles when they wiggle
     this.bubbles = [];
     this.bubbleCooldown = 0;
+    this.pitchOffset = random(-7, 8); // semitone detune
+    this.grumbleSpeed = random(0.8, 1.5); // 1 = normal, <1 slower, >1 faster
+    this.grumbleNoteBase = random([
+      "C#4", "D4", "D#4", "F4", "G4", "A4", "B4", "C5", "E5"
+    ]); // per-fish "voice"
+
+    this.isGrumbling = false;
+    this.lastGrumble = 0;
   }
 
   update(strongWiggle) {
@@ -49,6 +58,18 @@ class Fish {
 
     // Remove old bubbles
     this.bubbles = this.bubbles.filter(b => millis() - b.t < 1200);
+
+    if (strongWiggle && millis() - this.lastGrumble > 140 / this.grumbleSpeed) {
+      // Pick this fish's base, detuned & intervalled
+      let midi = Tone.Frequency(this.grumbleNoteBase).toMidi() +
+        this.pitchOffset + int(random(-2, 3));
+      let note = Tone.Frequency(midi, "midi").toNote();
+      let duration = random([0.12, 0.16, 0.23, 0.28]) * this.grumbleSpeed;
+      let velocity = 0.22 + random(0.14);
+
+      fishGrumbleSynth.triggerAttackRelease(note, duration, undefined, velocity);
+      this.lastGrumble = millis();
+    }
   }
 
   display(strongWiggle) {
