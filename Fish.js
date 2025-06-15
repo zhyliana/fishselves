@@ -115,11 +115,15 @@ class Fish {
       }
     }
 
+    // Head
     fill(this.baseCol);
     ellipse(0, 0, 34, 22);
+
+    // Dots
     fill(255, 255, 255, 60);
     ellipse(-6, 4, 7, 4);
     ellipse(4, -3, 4, 7);
+
     // Eye
     fill(0);
     ellipse(9, -3, 6, 6);
