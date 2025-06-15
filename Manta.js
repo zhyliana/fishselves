@@ -87,6 +87,11 @@ class Manta {
     translate(this.x, this.y);
     rotate(sin(this.phase) * (strongWiggle ? 0.25 : 0.08));
 
+    // Head
+    noStroke()
+    fill(this.baseCol);
+    ellipse(0, 0, 34, 22);
+
     // Tail
     const tailLen = 75
     for (let t = -1; t <= 1; t += 2) {
@@ -125,10 +130,6 @@ class Manta {
       }
     }
 
-    // Head
-    noStroke()
-    fill(this.baseCol);
-    ellipse(0, 0, 34, 22);
 
     // Dots
     fill(255, 255, 255, 60);
