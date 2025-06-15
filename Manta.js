@@ -9,7 +9,6 @@ class Manta extends CreatureBase {
     translate(this.x, this.y);
     rotate(sin(this.phase) * (strongWiggle ? 0.25 : 0.08));
     this.displayBody();
-    this.displayHead();
     this.displayTail(strongWiggle);
     this.displayEye();
     if (strongWiggle) this.onStrongWiggle();

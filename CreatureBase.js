@@ -82,7 +82,6 @@ class CreatureBase {
     rotate(sin(this.phase) * (strongWiggle ? 0.25 : 0.08));
     this.displayTail(strongWiggle);
     this.displayBody();
-    this.displayHead();
     this.displayEye();
     if (strongWiggle) this.onStrongWiggle();
     pop();
@@ -96,10 +95,6 @@ class CreatureBase {
     fill(255, 255, 255, 60);
     ellipse(-6, 4, 7, 4);
     ellipse(4, -3, 4, 7);
-  }
-
-  displayHead() {
-    //...
   }
 
   displayEye() {
