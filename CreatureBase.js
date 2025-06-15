@@ -11,8 +11,11 @@ class CreatureBase {
     this.wigglePower = 1;
     this.tailPhase = random(TWO_PI);
 
-    this.bubbles = [];
+    // Bubbles
+    this.bubbles = new Bubbles();
     this.bubbleCooldown = 0;
+
+    // Sound
     this.pitchOffset = random(-7, 8);
     this.grumbleSpeed = random(0.8, 1.5);
     this.grumbleNoteBase = random([
@@ -35,23 +38,13 @@ class CreatureBase {
 
     // Bubble blowing
     if (strongWiggle && this.bubbleCooldown <= 0) {
-      this.bubbles.push({
-        x: this.x + 15,
-        y: this.y - 7,
-        r: random(6, 13),
-        t: millis(),
-        vy: random(-0.8, -1.3)
-      });
+      this.bubbles.blow(this.x, this.y);
       this.bubbleCooldown = 8 + random(7);
     }
     this.bubbleCooldown = max(0, this.bubbleCooldown - 1);
 
-    // Move bubbles up
-    this.bubbles.forEach(b => {
-      b.y += b.vy;
-      b.x += sin(this.phase) * 0.12;
-    });
-    this.bubbles = this.bubbles.filter(b => millis() - b.t < 1200);
+    // Update bubbles
+    this.bubbles.update(this.phase);
 
     // Grumble sound
     if (strongWiggle && millis() - this.lastGrumble > 140 / this.grumbleSpeed) {
@@ -65,14 +58,7 @@ class CreatureBase {
   }
 
   displayBubbles() {
-    for (let b of this.bubbles) {
-      let age = (millis() - b.t) / 1200;
-      noStroke();
-      fill(200, 230, 255, 90 * (1 - age));
-      ellipse(b.x, b.y, b.r * (1 - 0.2 * age));
-      fill(255, 255, 255, 30 * (1 - age));
-      ellipse(b.x + b.r * 0.12, b.y - b.r * 0.18, b.r * 0.4, b.r * 0.25);
-    }
+    this.bubbles.display();
   }
 
   display(strongWiggle) {
