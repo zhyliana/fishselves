@@ -41,10 +41,10 @@ function setup() {
   // Unlock Tone.js context on user gesture (for Fish grumble)
   // getAudioContext().suspend();
   // userStartAudio();
-  // window.addEventListener('pointerdown', () => {
-  //   Tone.start();
-  //   getAudioContext().resume();
-  // }, { once: true });
+  window.addEventListener('pointerdown', () => {
+    Tone.start();
+    getAudioContext().resume();
+  }, { once: true });
 
   // Fish objects
   for (let i = 0; i < 8; i++) {
@@ -57,6 +57,7 @@ function draw() {
   // push();
   // translate(width, 0);
   // scale(-1, 1);
+  // background('black')
   image(video, 0, 0, width, height);
   // pop();
 
