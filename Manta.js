@@ -8,13 +8,16 @@ class Manta extends CreatureBase {
     this.displayBubbles();
     translate(this.x, this.y);
     rotate(sin(this.phase) * (strongWiggle ? 0.25 : 0.08));
+    this.displayBody();
+    this.displayHead();
+    this.displayTail(strongWiggle);
+    this.displayEye();
+    if (strongWiggle) this.onStrongWiggle();
+    pop();
+  }
 
-    // Head
-    noStroke();
-    fill(this.baseCol);
-    ellipse(0, 0, 34, 22);
-
-    // Tail (double ribbons)
+  displayTail(strongWiggle) {
+    // Double ribbon tail, glowy
     const tailLen = 75;
     for (let t = -1; t <= 1; t += 2) {
       for (let glow = 8; glow > 0; glow--) {
@@ -41,23 +44,5 @@ class Manta extends CreatureBase {
         endShape();
       }
     }
-
-    // Glow Aura
-    if (strongWiggle) {
-      for (let r = 26; r > 14; r -= 2) {
-        fill(255, 170, 240, 18);
-        ellipse(0, 0, r + this.wiggle, r * 0.65 + this.wiggle * 0.4);
-      }
-    }
-
-    // Dots
-    fill(255, 255, 255, 60);
-    ellipse(-6, 4, 7, 4);
-    ellipse(4, -3, 4, 7);
-
-    // Eye
-    fill(0);
-    ellipse(9, -3, 6, 6);
-    pop();
   }
 }
