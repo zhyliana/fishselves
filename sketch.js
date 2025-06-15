@@ -49,6 +49,7 @@ function setup() {
   // Fish objects
   for (let i = 0; i < 8; i++) {
     fish.push(new Fish(random(0, windowWidth), random(0, windowHeight)));
+    fish.push(new PsychedelicFish(random(0, windowWidth), random(0, windowHeight)));
   }
 }
 
