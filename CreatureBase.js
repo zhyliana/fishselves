@@ -3,13 +3,16 @@ class CreatureBase {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.baseX = x;
-    this.baseY = y;
+
     this.phase = random(TWO_PI);
     this.baseCol = color(random(180, 255), random(100, 180), random(180, 255));
     this.wiggle = 1;
     this.wigglePower = 1;
+
     this.tailPhase = random(TWO_PI);
+
+    // Swimming Behavior
+    this.swim = new SwimBehavior(x, y);
 
     // Bubbles
     this.bubbles = new Bubbles();
@@ -20,15 +23,12 @@ class CreatureBase {
   }
 
   update(strongWiggle) {
-    this.phase += 0.018 + (strongWiggle ? 0.13 : 0.05);
+    const swimPos = this.swim.update(strongWiggle);
+    this.x = swimPos.x;
+    this.y = swimPos.y;
     this.tailPhase += 0.07 + (strongWiggle ? 0.23 : 0.07);
-    this.baseX += sin(this.phase * 0.6) * 0.33;
-    this.baseY += cos(this.phase * 0.4) * 0.23;
-    let amp = strongWiggle ? 22 : 6;
-    this.wiggle = lerp(this.wiggle, amp, 0.25);
-    this.wigglePower = lerp(this.wigglePower, strongWiggle ? 2 : 1, 0.15);
-    this.x = this.baseX + sin(this.phase) * this.wiggle * this.wigglePower;
-    this.y = this.baseY + cos(this.phase * 0.8) * this.wiggle * 0.6 * this.wigglePower;
+    this.wiggle = this.swim.wiggle;
+    this.wigglePower = this.swim.wigglePower;
 
     // Bubble blowing
     if (strongWiggle && this.bubbleCooldown <= 0) {
@@ -52,7 +52,7 @@ class CreatureBase {
     push();
     this.displayBubbles();
     translate(this.x, this.y);
-    rotate(sin(this.phase) * (strongWiggle ? 0.25 : 0.08));
+    rotate(sin(this.swim.phase) * (strongWiggle ? 0.25 : 0.08));
     this.displayTail(strongWiggle);
     this.displayBody();
     this.displayEye();
