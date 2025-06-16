@@ -12,7 +12,7 @@ class CreatureBase {
     this.tailPhase = random(TWO_PI);
 
     // Swimming Behavior
-    this.swim = new SwimBehavior(x, y);
+    this.swim = new SwimBehavior(x, y, 60, windowHeight - 60);
 
     // Bubbles
     this.bubbles = new Bubbles();
