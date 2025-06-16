@@ -6,6 +6,7 @@ class CreatureBase {
 
     this.phase = random(TWO_PI);
     this.baseCol = color(random(180, 255), random(100, 180), random(180, 255));
+    this.facingAngle = 0;
     this.wiggle = 1;
     this.wigglePower = 1;
 
@@ -27,6 +28,7 @@ class CreatureBase {
     this.x = swimPos.x;
     this.y = swimPos.y;
     this.tailPhase += 0.07 + (strongWiggle ? 0.23 : 0.07);
+    this.facingAngle = swimPos.facingAngle;
     this.wiggle = this.swim.wiggle;
     this.wigglePower = this.swim.wigglePower;
 
@@ -52,6 +54,7 @@ class CreatureBase {
     push();
     this.displayBubbles();
     translate(this.x, this.y);
+    rotate(this.facingAngle);
     rotate(sin(this.swim.phase) * (strongWiggle ? 0.25 : 0.08));
     this.displayTail(strongWiggle);
     this.displayBody();

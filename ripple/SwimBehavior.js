@@ -13,6 +13,8 @@ class SwimBehavior {
     // Direction: 1 (right), -1 (left)
     this.direction = random([1, -1]);
     this.speed = random(1.2, 2.5) * this.direction;
+    this.prevX = x;
+    this.facingAngle = this.direction > 0 ? 0 : PI;
   }
 
   update(strongWiggle) {
@@ -41,6 +43,10 @@ class SwimBehavior {
       x = this.baseX;
     }
 
-    return { x, y };
+    // Set facing angle
+    let dx = x - this.prevX;
+    this.facingAngle = dx >= 0 ? 0 : PI; // 0 for right, PI for left
+
+    return { x, y, facingAngle: this.facingAngle };
   }
 }
