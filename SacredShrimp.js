@@ -16,12 +16,18 @@ class SacredShrimp extends CreatureBase {
 
   displayBody() {
     // Sacred geometry shell: logarithmic spiral with radial lines
+    // Spiral pulses with wiggle and appendage motion!
+    let spiralScale =
+      1.0 +
+      0.09 * sin(this.appendagePhase * 1.1) +
+      0.20 * (this.wigglePower - 1); // Pulses more when wiggling strongly
+
     stroke(this.lineColor);
     strokeWeight(2);
     noFill();
     beginShape();
     for (let t = 0; t < 2.5 * PI; t += PI / 48) {
-      let r = 18 * exp(0.23 * t) * this.shellDetail;
+      let r = 18 * exp(0.23 * t) * this.shellDetail * spiralScale;
       let x = r * cos(t);
       let y = r * sin(t) * 0.75;
       vertex(x, y);
@@ -32,7 +38,7 @@ class SacredShrimp extends CreatureBase {
     stroke(230, 200, 255, 60);
     for (let i = 0; i < 7; i++) {
       let angle = i * TWO_PI / 7;
-      let len = 32 * this.shellDetail;
+      let len = 32 * this.shellDetail * spiralScale;
       line(0, 0, len * cos(angle), len * sin(angle));
     }
   }
