@@ -51,6 +51,7 @@ function setup() {
     fish.push(new Manta(random(0, windowWidth), random(0, windowHeight), fish, true));
     fish.push(new Fish(random(0, windowWidth), random(0, windowHeight)));
     fish.push(new PsychedelicFish(random(0, windowWidth), random(0, windowHeight)));
+    fish.push(new SacredShrimp(random(0, windowWidth), random(0, windowHeight)));
   }
 }
 
