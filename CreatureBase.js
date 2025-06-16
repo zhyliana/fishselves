@@ -21,7 +21,7 @@ class CreatureBase {
 
   update(strongWiggle) {
     this.phase += 0.018 + (strongWiggle ? 0.13 : 0.05);
-    this.tailPhase += 0.18 + (strongWiggle ? 0.7 : 0.21);
+    this.tailPhase += 0.07 + (strongWiggle ? 0.23 : 0.07);
     this.baseX += sin(this.phase * 0.6) * 0.33;
     this.baseY += cos(this.phase * 0.4) * 0.23;
     let amp = strongWiggle ? 22 : 6;
