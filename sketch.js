@@ -19,7 +19,7 @@ function setup() {
   // Video for ml5 handpose
   video = createCapture(VIDEO, { flipped: true });
   video.size(windowWidth, windowHeight)
-  // video.hide();
+  video.hide();
 
   handPose.detectStart(video, results => predictions = results);
 
@@ -60,8 +60,8 @@ function draw() {
   // push();
   // translate(width, 0);
   // scale(-1, 1);
-  // background('black')
-  image(video, 0, 0, width, height);
+  background('black')
+  // image(video, 0, 0, width, height);
   // pop();
 
   // Find the tip of the middle finger in predictions
