@@ -29,6 +29,6 @@ class PsychedelicFish extends CreatureBase {
   displayStrokeOnly() {
     noFill();
     strokeWeight(2);
-    stroke(this.baseCol)
+    stroke(this.baseCol);
   }
 }

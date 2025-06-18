@@ -4,7 +4,12 @@ class SacredShrimp extends CreatureBase {
     this.appendagePhase = random(TWO_PI);
     this.appendageCount = int(random(6, 11));
     this.innerSpiral = random(0.7, 1.2);
-    this.lineColor = color(random(100, 255), random(150, 255), random(180, 255), 170);
+    this.lineColor = color(
+      random(100, 255),
+      random(150, 255),
+      random(180, 255),
+      170,
+    );
     this.headGlow = color(255, 255, 240, 80);
     this.shellDetail = random(0.7, 1.4);
   }
@@ -20,7 +25,7 @@ class SacredShrimp extends CreatureBase {
     let spiralScale =
       1.0 +
       0.09 * sin(this.appendagePhase * 1.1) +
-      0.20 * (this.wigglePower - 1); // Pulses more when wiggling strongly
+      0.2 * (this.wigglePower - 1); // Pulses more when wiggling strongly
 
     stroke(this.lineColor);
     strokeWeight(2);
@@ -37,7 +42,7 @@ class SacredShrimp extends CreatureBase {
     // Draw radial sacred geometry lines
     stroke(230, 200, 255, 60);
     for (let i = 0; i < 7; i++) {
-      let angle = i * TWO_PI / 7;
+      let angle = (i * TWO_PI) / 7;
       let len = 32 * this.shellDetail * spiralScale;
       line(0, 0, len * cos(angle), len * sin(angle));
     }
@@ -92,7 +97,8 @@ class SacredShrimp extends CreatureBase {
     push();
     for (let i = 0; i < this.appendageCount; i++) {
       let theta = map(i, 0, this.appendageCount, -PI / 2.3, PI / 1.4);
-      let flap = sin(this.appendagePhase + i * PI / 6) * 14 * this.innerSpiral;
+      let flap =
+        sin(this.appendagePhase + (i * PI) / 6) * 14 * this.innerSpiral;
       stroke(200 + 40 * sin(theta), 240, 200, 120);
       strokeWeight(2.3);
       noFill();

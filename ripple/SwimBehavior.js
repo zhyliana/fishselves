@@ -32,7 +32,8 @@ class SwimBehavior {
     this.wigglePower = lerp(this.wigglePower, strongWiggle ? 2 : 1, 0.15);
 
     let x = this.baseX + sin(this.phase) * this.wiggle * this.wigglePower;
-    let y = this.baseY + cos(this.phase * 0.8) * this.wiggle * 0.6 * this.wigglePower;
+    let y =
+      this.baseY + cos(this.phase * 0.8) * this.wiggle * 0.6 * this.wigglePower;
 
     // WRAP X AROUND: left/right join together
     if (x > windowWidth + 30) {

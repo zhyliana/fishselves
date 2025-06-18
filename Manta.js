@@ -34,9 +34,9 @@ class Manta extends CreatureBase {
             (amp + glow * 0.3) *
             Math.sin(
               this.tailPhase +
-              pct * Math.PI * 1.5 +
-              phaseJitter +
-              0.7 * Math.sin(this.tailPhase * 0.7 + pct * 5)
+                pct * Math.PI * 1.5 +
+                phaseJitter +
+                0.7 * Math.sin(this.tailPhase * 0.7 + pct * 5),
             );
           vertex(x, y);
         }

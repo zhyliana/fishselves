@@ -10,16 +10,16 @@ class Bubbles {
       y: y - 7,
       r: random(6, 13),
       t: millis(),
-      vy: random(-0.8, -1.3)
+      vy: random(-0.8, -1.3),
     });
   }
 
   update(phase) {
-    this.list.forEach(b => {
+    this.list.forEach((b) => {
       b.y += b.vy;
       b.x += sin(phase) * 0.12;
     });
-    this.list = this.list.filter(b => millis() - b.t < 1200);
+    this.list = this.list.filter((b) => millis() - b.t < 1200);
   }
 
   display() {

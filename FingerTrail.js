@@ -11,14 +11,14 @@ function drawFingerTrail() {
 
   // Remove faded points
   const now = millis();
-  fingerTrail = fingerTrail.filter(pt => now - pt.t < fadeDuration);
+  fingerTrail = fingerTrail.filter((pt) => now - pt.t < fadeDuration);
 
   // Smooth palette
   const palette = [
     [248, 244, 252], // white
     [155, 237, 255], // cyan
     [255, 169, 237], // magenta/pink
-    [252, 255, 210]  // yellow
+    [252, 255, 210], // yellow
   ];
 
   // Draw smooth, wispy main trail

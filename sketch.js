@@ -12,21 +12,21 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight)
+  createCanvas(windowWidth, windowHeight);
   noStroke();
 
   // Video for ml5 handpose
   video = createCapture(VIDEO, { flipped: true });
-  video.size(width, height)
+  video.size(width, height);
   video.hide();
 
-  handPose.detectStart(video, results => hands = results);
+  handPose.detectStart(video, (results) => (hands = results));
 
   // Global layered synth for all fish
   fishGrumbleSynth = new Tone.PolySynth(Tone.Synth, {
     maxPolyphony: 12,
     oscillator: { type: "triangle" },
-    envelope: { attack: 0.2, decay: 0.09, sustain: 0.18, release: 0.8 }
+    envelope: { attack: 0.2, decay: 0.09, sustain: 0.18, release: 0.8 },
   }).toDestination();
 
   // Make it cute and "alien" by running through a filter and some vibrato
@@ -40,17 +40,27 @@ function setup() {
   // Unlock Tone.js context on user gesture (for Fish grumble)
   // getAudioContext().suspend();
   // userStartAudio();
-  window.addEventListener('pointerdown', () => {
-    Tone.start();
-    getAudioContext().resume();
-  }, { once: true });
+  window.addEventListener(
+    "pointerdown",
+    () => {
+      Tone.start();
+      getAudioContext().resume();
+    },
+    { once: true },
+  );
 
   // Fish objects
   for (let i = 0; i < 8; i++) {
-    fish.push(new Manta(random(0, windowWidth), random(0, windowHeight), fish, true));
+    fish.push(
+      new Manta(random(0, windowWidth), random(0, windowHeight), fish, true),
+    );
     fish.push(new Fish(random(0, windowWidth), random(0, windowHeight)));
-    fish.push(new PsychedelicFish(random(0, windowWidth), random(0, windowHeight)));
-    fish.push(new SacredShrimp(random(0, windowWidth), random(0, windowHeight)));
+    fish.push(
+      new PsychedelicFish(random(0, windowWidth), random(0, windowHeight)),
+    );
+    fish.push(
+      new SacredShrimp(random(0, windowWidth), random(0, windowHeight)),
+    );
   }
 }
 
@@ -62,7 +72,6 @@ function draw() {
   // background('black')
   image(video, 0, 0, windowWidth, windowHeight);
   pop();
-
 
   // Pass hand wave data to shader
   // shader(fluidShader);
@@ -90,7 +99,11 @@ function draw() {
       if (dist(f.x, f.y, w.x, w.y) < 70) glow = true;
     }
     let strongWiggle = false;
-    for (let i = Math.max(0, fingerTrail.length - 18); i < fingerTrail.length; i++) {
+    for (
+      let i = Math.max(0, fingerTrail.length - 18);
+      i < fingerTrail.length;
+      i++
+    ) {
       let pt = fingerTrail[i];
       if (pt && dist(f.x, f.y, pt.x, pt.y) < 60) strongWiggle = true;
     }
@@ -100,10 +113,10 @@ function draw() {
 
   // Find the tip of the middle finger in hands
   if (hands.length > 0) {
-    const tip = hands[0].middle_finger_tip
+    const tip = hands[0].middle_finger_tip;
     if (tip) {
-      const x = tip.x
-      const y = tip.y
+      const x = tip.x;
+      const y = tip.y;
 
       addFingerPoint(x, y);
     }

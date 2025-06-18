@@ -65,7 +65,7 @@ class CreatureBase {
 
   displayBody() {
     // Default: generic oval body with dots
-    noStroke()
+    noStroke();
     fill(this.baseCol);
     ellipse(0, 0, 34, 22);
     fill(255, 255, 255, 60);
@@ -99,7 +99,7 @@ class CreatureBase {
 
   onStrongWiggle() {
     // Default: aura glow
-    noStroke()
+    noStroke();
     for (let r = 26; r > 14; r -= 2) {
       fill(255, 170, 240, 18);
       ellipse(0, 0, r + this.wiggle, r * 0.65 + this.wiggle * 0.4);
