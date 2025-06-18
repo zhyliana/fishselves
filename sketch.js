@@ -1,14 +1,13 @@
 let fluidShader;
 let handpose;
 let video;
-let predictions = [];
-let lastHandPos = null;
+let hands = [];
 let waves = [];
 let fish = [];
 let fishGrumbleSynth;
 
 function preload() {
-  handPose = ml5.handPose({ flipped: true });
+  handPose = ml5.handPose({ flipped: true, maxHands: 1 });
   // fluidShader = loadShader('shaders/fluid.vert', 'shaders/fluid.frag');
 }
 
@@ -18,16 +17,16 @@ function setup() {
 
   // Video for ml5 handpose
   video = createCapture(VIDEO, { flipped: true });
-  video.size(windowWidth, windowHeight)
+  video.size(width, height)
   video.hide();
 
-  handPose.detectStart(video, results => predictions = results);
+  handPose.detectStart(video, results => hands = results);
 
   // Global layered synth for all fish
   fishGrumbleSynth = new Tone.PolySynth(Tone.Synth, {
     maxPolyphony: 12,
     oscillator: { type: "triangle" },
-    envelope: { attack: 0.02, decay: 0.09, sustain: 0.18, release: 0.18 }
+    envelope: { attack: 0.2, decay: 0.09, sustain: 0.18, release: 0.8 }
   }).toDestination();
 
   // Make it cute and "alien" by running through a filter and some vibrato
@@ -57,31 +56,13 @@ function setup() {
 
 function draw() {
   // Flip
-  // push();
+  push();
   // translate(width, 0);
   // scale(-1, 1);
-  background('black')
-  // image(video, 0, 0, width, height);
-  // pop();
+  // background('black')
+  image(video, 0, 0, windowWidth, windowHeight);
+  pop();
 
-  // Find the tip of the middle finger in predictions
-  if (predictions.length > 0) {
-    const tip = predictions[0].keypoints.find(pt => pt.name === "middle_finger_tip");
-    if (tip) {
-      const x = tip.x
-      const y = tip.y
-
-      if (lastHandPos) {
-        let d = dist(x, y, lastHandPos.x, lastHandPos.y);
-        if (d > 20) {
-          addFingerPoint(x, y);
-        }
-      }
-      lastHandPos = { x, y };
-    }
-  }
-
-  drawFingerTrail();
 
   // Pass hand wave data to shader
   // shader(fluidShader);
@@ -116,4 +97,17 @@ function draw() {
     f.update(strongWiggle);
     f.display(strongWiggle);
   }
+
+  // Find the tip of the middle finger in hands
+  if (hands.length > 0) {
+    const tip = hands[0].middle_finger_tip
+    if (tip) {
+      const x = tip.x
+      const y = tip.y
+
+      addFingerPoint(x, y);
+    }
+  }
+
+  drawFingerTrail();
 }

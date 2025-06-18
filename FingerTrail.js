@@ -37,14 +37,4 @@ function drawFingerTrail() {
     }
     endShape();
   }
-
-  // Dots: scattered along the trail, fade out as well
-  for (let i = 0; i < fingerTrail.length; i += 3) {
-    const pt = fingerTrail[i];
-    const age = map(now - pt.t, 0, fadeDuration + 500, 0, 1);
-    const c = palette[i % palette.length];
-    noStroke();
-    fill(c[0], c[1], c[2], lerp(50, 0, age));
-    ellipse(pt.x + random(-3, 3), pt.y + random(-3, 3), random(2, 8), random(2, 13));
-  }
 }
