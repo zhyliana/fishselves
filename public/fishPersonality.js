@@ -1,4 +1,4 @@
-export const NAMES = [
+const NAMES = [
   "Adley",
   "Aiden",
   "Amos",
@@ -98,3 +98,16 @@ export const NAMES = [
   "Wren",
   "Zuri"
 ]
+
+const BIO = [
+  "${name} flits through your life like a rare cosmic bird, dazzling you everyday with otherworldly colors, whispering, “Isn’t it thrilling to watch me soar?” All the while not yet knowing you dream of keeping their wildness for yourself.",
+  "“Aren’t I strange and wonderful?”, ${name} says, never suspecting your gaze might long to keep them shimmering just for you.",
+  "Every day, ${name} returns brighter and wilder, basking in your fascination, asking, “Will you ever tire of my mysteries?”—unaware that too much adoration can become its own gentle cage.",
+  "${name} lets you marvel at their impossible freedom, beaming, “Isn’t it lovely to witness magic?”—not realizing your wonder is just the first step toward wanting them all to yourself."
+]
+
+const getFishPersonality = () => {
+  return {
+    name: NAMES[Math.floor(Math.random() * NAMES.length)]
+  }
+}

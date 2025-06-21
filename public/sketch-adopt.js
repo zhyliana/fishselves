@@ -32,7 +32,8 @@ function setup() {
         myFish.id = msg.fish.id;
 
         // Show adopted info
-        let info = `You adopted: <b>${msg.fish.type || "Fish"}</b> (#${msg.fish.id})`;
+        const { name } = getFishPersonality();
+        let info = `You adopted: <b>${name}</b>`;
         document.getElementById("fish-info").innerHTML = info;
       } else {
         document.getElementById("fish-info").innerHTML = "Sorry, no fish left to adopt!";
