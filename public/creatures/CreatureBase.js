@@ -21,6 +21,8 @@ class CreatureBase {
 
     // Sound
     this.sound = new CreatureSound();
+
+    this.id = null; // Set externally
   }
 
   update(strongWiggle) {

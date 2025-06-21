@@ -23,14 +23,16 @@ const wss = new WebSocket.Server({ server });
 
 // Example "pool" of fish (could be expanded)
 let fishPool = [
-  { id: 1, type: 'classic', color: [230, 180, 220] },
-  { id: 2, type: 'psychedelic', color: [160, 120, 220] },
+  { id: 1, type: 'fish', color: [230, 180, 220] },
+  { id: 2, type: 'psychedelicFish', color: [160, 120, 220] },
   { id: 3, type: 'shrimp', color: [180, 200, 250] },
   { id: 4, type: 'manta', color: [120, 180, 210] },
-  { id: 5, type: 'classic', color: [190, 140, 230] },
-  { id: 6, type: 'psychedelic', color: [180, 160, 190] },
+  { id: 5, type: 'fish', color: [190, 140, 230] },
+  { id: 6, type: 'psychedelicFish', color: [180, 160, 190] },
   // Add more as needed
 ];
+
+let adopted = []
 
 wss.on('connection', (ws) => {
   // Send the current pool on connect
@@ -41,18 +43,26 @@ wss.on('connection', (ws) => {
       ws.send(JSON.stringify({ type: 'fishPool', fish: fishPool }));
     }
     if (data.type === 'adoptFish') {
+      // Remove a fish ONLY for /adopt clients
       let adoptedFish = fishPool.shift() || null;
+      if (adoptedFish) adopted.push(adoptedFish);
+
       ws.send(JSON.stringify({ type: 'adoptedFish', fish: adoptedFish }));
-      // Optionally: Broadcast new pool to all tanks
-      broadcastPool();
+
+      // Tell tank clients (so they can show a "ghost explosion" at adoptedFish.x/y)
+      broadcastPool(adoptedFish);
     }
   });
 });
 
 // Helper to broadcast fishPool to all clients (e.g., update tank view)
-function broadcastPool() {
-  const msg = JSON.stringify({ type: 'fishPool', fish: fishPool });
+function broadcastPool(adoptedFish) {
+  const msg = JSON.stringify({
+    type: 'fishPool',
+    fish: fishPool,
+    adoptedFish: adoptedFish || null
+  });
   wss.clients.forEach(client => {
-    if (client.readyState === WebSocket.OPEN) client.send(msg);
+    if (client.readyState === 1) client.send(msg);
   });
 }
