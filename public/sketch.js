@@ -6,6 +6,10 @@ let mantas = [];
 let shrimpies = [];
 let ghostExplosions = [];
 
+let video;
+let hands = [];
+let fishGrumbleSynth;
+
 let fishArr = [];
 
 // Example: import { SacredGeometryShrimp } from './SacredGeometryShrimp.js';
@@ -45,8 +49,14 @@ function updateFishPool(newFishData, adoptedFish) {
 
 let ws; // Declare at top-level
 
-// 2. p5.js setup
+// ml5.js ------
+let handpose;
+function preload() {
+  handPose = ml5.handPose({ flipped: true, maxHands: 1 });
+  // fluidShader = loadShader('shaders/fluid.vert', 'shaders/fluid.frag');
+}
 
+// 2. p5.js setup
 function setupSocket() {
   // Initialize WebSocket once
   ws = new WebSocket('ws://localhost:4000');
@@ -65,20 +75,89 @@ function setupSocket() {
   };
 }
 
+function setupMl5() {
+  // Video for ml5 handpose
+  video = createCapture(VIDEO, { flipped: true });
+  video.size(width, height);
+  video.hide();
+
+  handPose.detectStart(video, (results) => (hands = results));
+}
+
+function setupSynth() {
+  // Global layered synth for all fish
+  fishGrumbleSynth = new Tone.PolySynth(Tone.Synth, {
+    maxPolyphony: 12,
+    oscillator: { type: "triangle" },
+    envelope: { attack: 0.2, decay: 0.09, sustain: 0.18, release: 0.8 },
+  }).toDestination();
+
+  // Make it cute and "alien" by running through a filter and some vibrato
+  const fishFilter = new Tone.Filter(1100, "highpass").toDestination();
+  fishGrumbleSynth.connect(fishFilter);
+
+  // Optional vibrato effect
+  const vibrato = new Tone.Vibrato(4.7, 0.19).toDestination();
+  fishFilter.connect(vibrato);
+
+  // Unlock Tone.js context on user gesture (for Fish grumble)
+  // getAudioContext().suspend();
+  // userStartAudio();
+  window.addEventListener(
+    "pointerdown",
+    () => {
+      Tone.start();
+      getAudioContext().resume();
+    },
+    { once: true },
+  );
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  setupSocket()
+  setupSocket();
+  setupMl5();
+  setupSynth();
 }
 
 // 3. p5.js draw loop
 function draw() {
-  background(12, 10, 40);
+  // background('black')
+  image(video, 0, 0, windowWidth, windowHeight);
 
   fishArr.forEach(f => {
-    f.update(false);
-    f.display(false);
+    // Fish react to waves near them
+    for (let w of fingerTrail) {
+      if (dist(f.x, f.y, w.x, w.y) < 70) glow = true;
+    }
+
+    let strongWiggle = false;
+    for (
+      let i = Math.max(0, fingerTrail.length - 18);
+      i < fingerTrail.length;
+      i++
+    ) {
+      let pt = fingerTrail[i];
+      if (pt && dist(f.x, f.y, pt.x, pt.y) < 60) strongWiggle = true;
+    }
+
+    f.update(strongWiggle);
+    f.display(strongWiggle);
   });
+
+  // Find the tip of the middle finger in hands
+  if (hands.length > 0) {
+    const tip = hands[0].middle_finger_tip;
+    if (tip) {
+      const x = tip.x;
+      const y = tip.y;
+
+      addFingerPoint(x, y);
+    }
+  }
+
+  drawFingerTrail();
 
   // Ghost explosions
   ghostExplosions = ghostExplosions.filter(g => {

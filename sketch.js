@@ -15,39 +15,39 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
 
-  // Video for ml5 handpose
-  video = createCapture(VIDEO, { flipped: true });
-  video.size(width, height);
-  video.hide();
+  // // Video for ml5 handpose
+  // video = createCapture(VIDEO, { flipped: true });
+  // video.size(width, height);
+  // video.hide();
 
-  handPose.detectStart(video, (results) => (hands = results));
+  // handPose.detectStart(video, (results) => (hands = results));
 
-  // Global layered synth for all fish
-  fishGrumbleSynth = new Tone.PolySynth(Tone.Synth, {
-    maxPolyphony: 12,
-    oscillator: { type: "triangle" },
-    envelope: { attack: 0.2, decay: 0.09, sustain: 0.18, release: 0.8 },
-  }).toDestination();
+  // // Global layered synth for all fish
+  // fishGrumbleSynth = new Tone.PolySynth(Tone.Synth, {
+  //   maxPolyphony: 12,
+  //   oscillator: { type: "triangle" },
+  //   envelope: { attack: 0.2, decay: 0.09, sustain: 0.18, release: 0.8 },
+  // }).toDestination();
 
-  // Make it cute and "alien" by running through a filter and some vibrato
-  const fishFilter = new Tone.Filter(1100, "highpass").toDestination();
-  fishGrumbleSynth.connect(fishFilter);
+  // // Make it cute and "alien" by running through a filter and some vibrato
+  // const fishFilter = new Tone.Filter(1100, "highpass").toDestination();
+  // fishGrumbleSynth.connect(fishFilter);
 
-  // Optional vibrato effect
-  const vibrato = new Tone.Vibrato(4.7, 0.19).toDestination();
-  fishFilter.connect(vibrato);
+  // // Optional vibrato effect
+  // const vibrato = new Tone.Vibrato(4.7, 0.19).toDestination();
+  // fishFilter.connect(vibrato);
 
-  // Unlock Tone.js context on user gesture (for Fish grumble)
-  // getAudioContext().suspend();
-  // userStartAudio();
-  window.addEventListener(
-    "pointerdown",
-    () => {
-      Tone.start();
-      getAudioContext().resume();
-    },
-    { once: true },
-  );
+  // // Unlock Tone.js context on user gesture (for Fish grumble)
+  // // getAudioContext().suspend();
+  // // userStartAudio();
+  // window.addEventListener(
+  //   "pointerdown",
+  //   () => {
+  //     Tone.start();
+  //     getAudioContext().resume();
+  //   },
+  //   { once: true },
+  // );
 
   // Fish objects
   for (let i = 0; i < 8; i++) {
