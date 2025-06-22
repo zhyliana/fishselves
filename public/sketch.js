@@ -15,7 +15,7 @@ let fishArr = [];
 // Example: import { SacredGeometryShrimp } from './SacredGeometryShrimp.js';
 
 const FISH_CLASSES = {
-  fish: CreatureBase,
+  fish: Fish,
   psychedelicFish: PsychedelicFish,
   shrimp: SacredShrimp,
   manta: Manta

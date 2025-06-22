@@ -21,16 +21,18 @@ function setup() {
       if (msg.fish) {
         // Map type to class (just like index.js)
         const FISH_CLASSES = {
-          "classic": Fish,
-          "psychedelic": PsychedelicFish,
-          "manta": Manta,
-          "shrimp": SacredShrimp,
+          fish: Fish,
+          psychedelicFish: PsychedelicFish,
+          shrimp: SacredShrimp,
+          manta: Manta
+          // Add more as needed
         };
         const FishClass = FISH_CLASSES[msg.fish.type] || Fish;
         myFish = new FishClass(width / 2, height / 2);
         if (msg.fish.color) myFish.baseCol = color(...msg.fish.color);
         myFish.id = msg.fish.id;
 
+        myFish.swim.setSadMode(true);
         // Show adopted info
         const { name } = getFishPersonality();
         let info = `You adopted: <b>${name}</b>`;

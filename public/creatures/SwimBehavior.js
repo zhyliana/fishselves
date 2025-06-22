@@ -15,6 +15,7 @@ class SwimBehavior {
     this.speed = random(1.2, 2.5) * this.direction;
     this.prevX = x;
     this.facingAngle = this.direction > 0 ? 0 : PI;
+    this.sadMode = false;
   }
 
   update(strongWiggle) {
@@ -34,6 +35,11 @@ class SwimBehavior {
     let x = this.baseX + sin(this.phase) * this.wiggle * this.wigglePower;
     let y =
       this.baseY + cos(this.phase * 0.8) * this.wiggle * 0.6 * this.wigglePower;
+    if (this.sadMode) {
+      x = windowWidth / 2 + sin(this.phase / 8) * 75
+
+      return { x, y, facingAngle: 0 }
+    }
 
     // WRAP X AROUND: left/right join together
     if (x > windowWidth + 30) {
@@ -49,5 +55,9 @@ class SwimBehavior {
     this.facingAngle = dx >= 0 ? 0 : PI; // 0 for right, PI for left
 
     return { x, y, facingAngle: this.facingAngle };
+  }
+
+  setSadMode(isSad) {
+    this.sadMode = isSad;
   }
 }
