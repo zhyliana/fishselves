@@ -36,7 +36,8 @@ class SwimBehavior {
     let y =
       this.baseY + cos(this.phase * 0.8) * this.wiggle * 0.6 * this.wigglePower;
     if (this.sadMode) {
-      x = windowWidth / 2 + sin(this.phase / 8) * 75
+      x = windowWidth + sin(this.phase / 8) * 50
+      y += windowHeight / 2
 
       return { x, y, facingAngle: 0 }
     }

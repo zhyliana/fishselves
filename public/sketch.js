@@ -18,7 +18,8 @@ const FISH_CLASSES = {
   fish: Fish,
   psychedelicFish: PsychedelicFish,
   shrimp: SacredShrimp,
-  manta: Manta
+  manta: Manta,
+  quetzal: Quetzal,
   // Add more as needed
 };
 
@@ -123,8 +124,8 @@ function setup() {
 
 // 3. p5.js draw loop
 function draw() {
-  // background('black')
-  image(video, 0, 0, windowWidth, windowHeight);
+  background('black')
+  // image(video, 0, 0, windowWidth, windowHeight);
 
   fishArr.forEach(f => {
     // Fish react to waves near them

@@ -23,12 +23,21 @@ const wss = new WebSocket.Server({ server });
 
 // Example "pool" of fish (could be expanded)
 let fishPool = [
-  { id: 1, type: 'fish', color: [230, 180, 220] },
+  { id: 1, type: 'quetzal', color: [230, 180, 220] },
   { id: 2, type: 'psychedelicFish', color: [160, 120, 220] },
   { id: 3, type: 'shrimp', color: [180, 200, 250] },
   { id: 4, type: 'manta', color: [120, 180, 210] },
   { id: 5, type: 'fish', color: [190, 140, 230] },
   { id: 6, type: 'psychedelicFish', color: [180, 160, 190] },
+  { id: 7, type: 'quetzal', color: [180, 160, 190] },
+  { id: 8, type: 'shrimp', color: [180, 200, 250] },
+  { id: 9, type: 'psychedelicFish', color: [180, 200, 250] },
+  { id: 10, type: 'manta', color: [180, 200, 250] },
+  { id: 11, type: 'manta', color: [180, 200, 250] },
+  { id: 12, type: 'fish', color: [190, 140, 230] },
+  { id: 13, type: 'shrimp', color: [180, 200, 250] },
+  { id: 13, type: 'psychedelicFish', color: [180, 200, 250] },
+  { id: 15, type: 'fish', color: [190, 140, 230] },
   // Add more as needed
 ];
 

@@ -12,6 +12,8 @@
   <script src="./libs/ml5.min.js"></script>
 
   <!-- Creature Classes (order matters: base first!) -->
+  <script src="assets/bowl.png"></script>
+  <script src="assets/bowl_with_water.png"></script>
   <script src="creatures/CreatureBase.js"></script>
   <script src="creatures/Bubbles.js"></script>
   <script src="creatures/CreatureSound.js"></script>
@@ -21,6 +23,7 @@
   <script src="creatures/PsychedelicFish.js"></script>
   <script src="creatures/SacredShrimp.js"></script>
   <script src="creatures/SwimBehavior.js"></script>
+  <script src="creatures/Quetzal.js"></script>
   <script src="creatures/FingerTrail.js"></script>
   <script src="fishPersonality.js"></script>
 
@@ -35,13 +38,16 @@
 
     #title {
       color: #fff;
-      font-family: 'Inter', sans-serif;
       position: absolute;
       top: 18px;
       left: 30px;
-      font-size: 2.2rem;
       z-index: 10;
-      text-shadow: 0 2px 18px #000;
+      /* text-shadow: 0 2px 18px #000; */
+      background: rgba(8, 6, 11, 0.55);
+      padding: 14px 22px;
+      border-radius: 16px;
+      font-family: monospace;
+      box-shadow: 0 3px 24px #000a;
     }
 
     #fish-info {
@@ -49,10 +55,10 @@
       bottom: 28px;
       left: 30px;
       color: #fff;
+
       background: rgba(40, 20, 60, 0.55);
       padding: 14px 22px;
       border-radius: 16px;
-      font-size: 1.1rem;
       font-family: monospace;
       box-shadow: 0 3px 24px #000a;
     }
