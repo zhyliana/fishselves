@@ -1,0 +1,41 @@
+# Ignore build artifacts and generated directories
+build/
+dist/
+target/
+*.o
+*.class
+*.pyc
+
+# Ignore dependency caches
+node_modules/
+vendor/
+packages/
+
+# Ignore log files and temporary files
+*.log
+*.tmp
+*.lock
+
+# Ignore system-generated files
+.DS_Store # macOS
+Thumbs.db # Windows
+
+# Ignore IDE and editor specific files
+.idea/ # IntelliJ IDEA
+.vscode/ # Visual Studio Code
+*.sublime-workspace # Sublime Text
+
+# Ignore sensitive files (e.g., configuration files with credentials)
+.env
+config.json
+secrets.txt
+
+# Exception: Don't ignore important files within an ignored directory
+!logs/important.log # This will still be tracked even if logs/ is ignored
+
+# Ignore specific file types
+*.pdf # ignore all pdf files
+*.psd # ignore all photoshop files
+
+# Ignore directories by name, regardless of where they are located
+temp/ # ignore any folder named temp anywhere in the project
