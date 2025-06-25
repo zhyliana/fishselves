@@ -29,15 +29,21 @@ let fishPool = [
   { id: 4, type: 'manta', color: [120, 180, 210] },
   { id: 5, type: 'fish', color: [190, 140, 230] },
   { id: 6, type: 'psychedelicFish', color: [180, 160, 190] },
-  { id: 7, type: 'quetzal', color: [180, 160, 190] },
+  { id: 7, type: 'shrimp', color: [180, 160, 190] },
   { id: 8, type: 'shrimp', color: [180, 200, 250] },
   { id: 9, type: 'psychedelicFish', color: [180, 200, 250] },
   { id: 10, type: 'manta', color: [180, 200, 250] },
   { id: 11, type: 'manta', color: [180, 200, 250] },
   { id: 12, type: 'fish', color: [190, 140, 230] },
   { id: 13, type: 'shrimp', color: [180, 200, 250] },
-  { id: 13, type: 'psychedelicFish', color: [180, 200, 250] },
+  { id: 14, type: 'psychedelicFish', color: [180, 200, 250] },
   { id: 15, type: 'fish', color: [190, 140, 230] },
+  { id: 16, type: 'manta', color: [180, 200, 250] },
+  { id: 17, type: 'manta', color: [180, 200, 250] },
+  { id: 18, type: 'fish', color: [190, 140, 230] },
+  { id: 19, type: 'shrimp', color: [180, 200, 250] },
+  { id: 20, type: 'psychedelicFish', color: [180, 200, 250] },
+  { id: 21, type: 'fish', color: [190, 140, 230] },
   // Add more as needed
 ];
 
