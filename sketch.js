@@ -61,11 +61,15 @@ function setup() {
   // Unlock Tone.js context on user gesture (for Fish grumble)
   // getAudioContext().suspend();
   // userStartAudio();
+
+  document.querySelector("canvas").addEventListener('click', async () => {
+    await Tone.start()
+  })
   window.addEventListener(
-    "pointerdown",
+    "click",
     () => {
       Tone.start();
-      getAudioContext().resume();
+      // getAudioContext().resume();
     },
     { once: true },
   );
@@ -87,12 +91,12 @@ function setup() {
 
 function draw() {
   // Flip
-  push();
+  // push();
   // translate(width, 0);
   // scale(-1, 1);
-  // background('black')
-  image(video, 0, 0, windowWidth, windowHeight);
-  pop();
+  background('black')
+  // image(video, 0, 0, windowWidth, windowHeight);
+  // pop();
 
   // Pass hand wave data to shader
   // shader(fluidShader);
