@@ -6,6 +6,27 @@ let waves = [];
 let fish = [];
 let fishGrumbleSynth;
 
+let fishArr = [];
+let spawning = []; // for creatures being animated in
+
+function addRandomCreature() {
+  console.log("Add creature")
+  // Pick a random type
+  const types = Object.keys(FISH_CLASSES);
+  const type = random(types);
+  const FishClass = FISH_CLASSES[type];
+  let y = height / 2 + random(-80, 80);
+  let creature = new FishClass(width / 2, y);
+  let spawner = new SpawningCreature(creature, width / 2, y);
+  spawning.push(spawner);
+}
+
+// Trigger a spawn by button, socket event, or timed interval
+function mousePressed() {
+  console.log("mouse pressed")
+  addRandomCreature();
+}
+
 function preload() {
   handPose = ml5.handPose({ flipped: true, maxHands: 1 });
   // fluidShader = loadShader('shaders/fluid.vert', 'shaders/fluid.frag');
@@ -15,39 +36,39 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   noStroke();
 
-  // // Video for ml5 handpose
-  // video = createCapture(VIDEO, { flipped: true });
-  // video.size(width, height);
-  // video.hide();
+  // Video for ml5 handpose
+  video = createCapture(VIDEO, { flipped: true });
+  video.size(width, height);
+  video.hide();
 
-  // handPose.detectStart(video, (results) => (hands = results));
+  handPose.detectStart(video, (results) => (hands = results));
 
-  // // Global layered synth for all fish
-  // fishGrumbleSynth = new Tone.PolySynth(Tone.Synth, {
-  //   maxPolyphony: 12,
-  //   oscillator: { type: "triangle" },
-  //   envelope: { attack: 0.2, decay: 0.09, sustain: 0.18, release: 0.8 },
-  // }).toDestination();
+  // Global layered synth for all fish
+  fishGrumbleSynth = new Tone.PolySynth(Tone.Synth, {
+    maxPolyphony: 12,
+    oscillator: { type: "triangle" },
+    envelope: { attack: 0.2, decay: 0.09, sustain: 0.18, release: 0.8 },
+  }).toDestination();
 
-  // // Make it cute and "alien" by running through a filter and some vibrato
-  // const fishFilter = new Tone.Filter(1100, "highpass").toDestination();
-  // fishGrumbleSynth.connect(fishFilter);
+  // Make it cute and "alien" by running through a filter and some vibrato
+  const fishFilter = new Tone.Filter(1100, "highpass").toDestination();
+  fishGrumbleSynth.connect(fishFilter);
 
-  // // Optional vibrato effect
-  // const vibrato = new Tone.Vibrato(4.7, 0.19).toDestination();
-  // fishFilter.connect(vibrato);
+  // Optional vibrato effect
+  const vibrato = new Tone.Vibrato(4.7, 0.19).toDestination();
+  fishFilter.connect(vibrato);
 
-  // // Unlock Tone.js context on user gesture (for Fish grumble)
-  // // getAudioContext().suspend();
-  // // userStartAudio();
-  // window.addEventListener(
-  //   "pointerdown",
-  //   () => {
-  //     Tone.start();
-  //     getAudioContext().resume();
-  //   },
-  //   { once: true },
-  // );
+  // Unlock Tone.js context on user gesture (for Fish grumble)
+  // getAudioContext().suspend();
+  // userStartAudio();
+  window.addEventListener(
+    "pointerdown",
+    () => {
+      Tone.start();
+      getAudioContext().resume();
+    },
+    { once: true },
+  );
 
   // Fish objects
   for (let i = 0; i < 8; i++) {
@@ -91,6 +112,18 @@ function draw() {
   // Draw fluid background
   // rect(-width / 2, -height / 2, width, height);
   // resetShader();
+
+
+  // Show spawning creatures
+  for (let i = spawning.length - 1; i >= 0; i--) {
+    spawning[i].update();
+    spawning[i].display();
+    if (spawning[i].finished()) {
+      fishArr.push(spawning[i].creature); // Add finished creature to tank
+      spawning.splice(i, 1);
+    }
+  }
+
 
   // Draw fish
   for (let f of fish) {
