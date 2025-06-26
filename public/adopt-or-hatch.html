@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Adopt or Hatch a Fish</title>
+  <style>
+    body {
+      background: #141828;
+      color: #f9f9f9;
+      font-family: 'Fira Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .choice {
+      margin: 2em 0;
+    }
+
+    button {
+      font-size: 1.3em;
+      padding: 0.7em 1.8em;
+      margin: 0.7em;
+      border-radius: 8px;
+      border: none;
+      background: #2e95ff;
+      color: white;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+
+    button:hover {
+      background: #35a6e6;
+    }
+
+    .form-section {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    label {
+      margin: 1em 0 0.3em;
+    }
+
+    input,
+    textarea {
+      padding: 0.4em;
+      font-size: 1.1em;
+      width: 22em;
+      border-radius: 5px;
+      border: 1px solid #222;
+      margin-bottom: 1.2em;
+    }
+
+    .hatching {
+      font-size: 1.3em;
+      margin-top: 2em;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Would you like to Adopt or Hatch a Fish?</h1>
+  <div class="choice">
+    <button id="adoptBtn">Adopt a Fish</button>
+    <button id="hatchBtn">Hatch a New Fish</button>
+  </div>
+  <form id="hatchForm" class="form-section">
+    <label for="gift">What is your fish's special gift?</label>
+    <input type="text" id="gift" required maxlength="120">
+    <label for="benefit">How could the other fish benefit from this gift?</label>
+    <textarea id="benefit" rows="3" required maxlength="300"></textarea>
+    <button type="submit">Hatch Fish</button>
+  </form>
+  <div id="hatchingScreen" class="form-section">
+    <div class="hatching">Your fish is about to hatch!<br>Look for it in the tank...</div>
+  </div>
+
+  <script>
+    // Show the form for hatching
+    document.getElementById('hatchBtn').onclick = () => {
+      document.querySelector('.choice').style.display = 'none';
+      document.getElementById('hatchForm').style.display = 'flex';
+    };
+    // Send to adopt page
+    document.getElementById('adoptBtn').onclick = () => {
+      window.location.href = 'adopt.html';
+    };
+
+    document.getElementById('hatchForm').onsubmit = e => {
+      e.preventDefault();
+      document.getElementById('hatchForm').style.display = 'none';
+      document.getElementById('hatchingScreen').style.display = 'flex';
+      // You might want to display these answers in the fish bubble, or send to server!
+      const gift = document.getElementById('gift').value;
+      const benefit = document.getElementById('benefit').value;
+
+      // Open a websocket and request a hatch (could POST to your node server instead)
+      const ws = new WebSocket('ws://' + window.location.hostname + ':4000');
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ type: 'hatch', gift, benefit }));
+      };
+      // Optionally handle response
+    };
+  </script>
+</body>
+
+</html>

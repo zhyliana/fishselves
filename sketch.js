@@ -91,12 +91,12 @@ function setup() {
 
 function draw() {
   // Flip
-  // push();
+  push();
   // translate(width, 0);
   // scale(-1, 1);
-  background('black')
-  // image(video, 0, 0, windowWidth, windowHeight);
-  // pop();
+  // background('black')
+  image(video, 0, 0, windowWidth, windowHeight);
+  pop();
 
   // Pass hand wave data to shader
   // shader(fluidShader);

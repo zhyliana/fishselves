@@ -120,12 +120,24 @@ function setup() {
   setupSocket();
   setupMl5();
   setupSynth();
+
+  document.querySelector("canvas").addEventListener('click', async () => {
+    await Tone.start()
+  })
+  window.addEventListener(
+    "click",
+    () => {
+      Tone.start();
+      // getAudioContext().resume();
+    },
+    { once: true },
+  );
 }
 
 // 3. p5.js draw loop
 function draw() {
-  background('black')
-  // image(video, 0, 0, windowWidth, windowHeight);
+  // background('black')
+  image(video, 0, 0, windowWidth, windowHeight);
 
   fishArr.forEach(f => {
     // Fish react to waves near them
